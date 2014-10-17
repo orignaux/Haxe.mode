@@ -9,7 +9,7 @@
 
 		<default id="Base" color="#000" background-color="#fff" font-weight="normal" font-style="normal">
 
-			<keywords id="Keywords" color="#6C0540" useforautocomplete="yes">
+			<keywords id="Keywords" color="#6C0540" useforautocomplete="yes" scope="keyword.control">
 				<string>break</string>
 				<string>callback</string>
 				<string>case</string>
@@ -57,7 +57,7 @@
 				<string>while</string>
 			</keywords>
 
-			<keywords id="Base Classes" color="#400080" useforautocomplete="yes">
+			<keywords id="Base Classes" color="#400080" useforautocomplete="yes" scope="support.class">
 				<string>Array</string>
 				<string>ArrayAccess</string>
 				<string>Bool</string>
@@ -92,9 +92,12 @@
 				<regex>(&lt;[a-zA-Z]+&gt;)</regex>
 			</keywords>
 			
-			<keywords id="Functions" color="#6619BC" useforautocomplete="yes">
+			<keywords id="FunctionRegex" color="#6619BC" useforautocomplete="no" scope="language.function">
+				<regex>([\$A-Za-z0-9_@]+)[ \t]*\(</regex>
+	    </keywords>
+<!-- 			<keywords id="Functions" color="#6619BC" useforautocomplete="yes">
 			</keywords>
-
+ -->
 			<keywords id="Classes" color="#CC4C00" useforautocomplete="yes">
 				<string>Bitmap</string>
 				<string>BitmapData</string>
@@ -175,34 +178,49 @@
 				<string>World</string>
 			</keywords>
 
-			<keywords id="Numbers" color="#009919" useforautocomplete="no">
+			<keywords id="Numbers" color="#009919" useforautocomplete="no" scope="constant.numeric">
 				<regex>(?&lt;=[^[A-Za-z0-9]]|^)((([0-9]+\.[0-9]*)|(\.[0-9]+)([eE][+\-]?[0-9]+)?[fFlL]?)|((([1-9][0-9]*)|0[0-7]*|(0[xX][0-9a-fA-F]))(([uU][lL]?)|([lL][uU]?))?))(?=[^[A-Za-z0-9]]|$)</regex>
 			</keywords>
-			<keywords id="Operators" color="#f00" useforautocomplete="no">
+			<keywords id="Operators" color="#f00" useforautocomplete="no" scope="language.operator">
 				<regex>([\(\)\+\-\*\\\=\{\}\[\]\|\!\:\&lt;\&gt;])</regex>
-            </keywords>
-			<keywords id="Preprocessor" color="#FF6500" useforautocomplete="no">
+      </keywords>
+			<keywords id="Preprocessor" color="#FF6500" useforautocomplete="no" scope="language.preprocessor">
 				<regex>(^[	]*#([^\n\r])*)</regex>
 			</keywords>
-
-			<state id="JavadocComment" type="comment" color="#236E25" font-weight="normal" font-style="italic">
-				<begin><regex>/\*\*(?=[\n\r])</regex></begin>
-				<end><regex>\*/</regex></end>
-			</state>
-			<state id="Comment" color="#236E25" font-style="italic">
+      <state id="JavadocComment" type="comment" foldable="yes" scope="comment">
+          <begin><regex>/\*\*(?=[\n\r])</regex></begin>
+          <end><regex>\*/</regex></end>
+          <import mode="Base" state="EmailAndURLContainerState" keywords-only="yes"/>
+      </state>
+			<state id="Comment" color="#236E25" font-style="italic" scope="comment.block" type="comment" foldable="yes">
 				<begin><regex>/\*</regex></begin>
 				<end><regex>\*/</regex></end>
+        <import mode="Base" state="EmailAndURLContainerState" keywords-only="yes"/>
 			</state>
-			<state id="SingleComment" color="#236E25" font-style="italic">
+			<state id="SingleComment" color="#236E25" font-style="italic" type="comment"  scope="comment.line">
 				<begin><regex>//</regex></begin>
 				<end><regex>[\n\r]</regex></end>
+        <import mode="Base" state="EmailAndURLContainerState" keywords-only="yes"/>
 			</state>
-
-			<state id="Double Quoted String" type="string" color="#727272" font-weight="normal" font-style="normal" usespellchecking="yes">
+      <state id="Block" foldable="yes" scope="meta.block">
+          <begin><regex>(?:(?&lt;=\s)(?:if|else|else\s+if|for|while|do|switch|case)\s*(?:\([^#{]*?\))?)?\s*{</regex></begin>
+          <end><regex>}</regex></end>
+          <import />
+      </state>
+			<state id="Regular Expressions" type="string" scope="string.regex">
+				<begin><regex>(?i)(?&lt;=[=(,:\+~!?|]|return|;)\s*/(?![/*+{}?\r\n])</regex></begin>
+				<end><regex>/[cgimosx]*</regex></end>
+				
+				<state id="Escaped Characters" scope="string.regex.escaped">
+					<begin><regex>\\</regex></begin>
+					<end><regex>.</regex></end>	
+				</state>
+			</state>
+			<state id="Double Quoted String" type="string" color="#727272" font-weight="normal" font-style="normal" usespellchecking="yes" scope="string.double">
 				<begin><regex>"</regex></begin>
 				<end><regex>(((?&lt;!\\)(\\\\)*)|^)"</regex></end>
 			</state>
-			<state id="Single Quoted String" type="string" color="#727272" font-weight="normal" font-style="normal" usespellchecking="yes">
+			<state id="Single Quoted String" type="string" color="#727272" font-weight="normal" font-style="normal" usespellchecking="yes" scope="string.single">
 				<begin><regex>'</regex></begin>
 				<end><regex>(((?&lt;!\\)(\\\\)*)|^)'</regex></end>
 			</state>

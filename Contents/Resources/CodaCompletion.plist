@@ -8,6 +8,8 @@
 		<string>*/</string>
 		<key>StartTag</key>
 		<string>/*</string>
+		<key>SingleTag</key>
+		<string>//</string>
 	</dict>
 	<key>Completions</key>
 	<array>
